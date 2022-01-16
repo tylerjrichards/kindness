@@ -51,8 +51,8 @@ df_clean = df_clean[df_clean['Actor'].isin(top_actors)]
 test_chart = alt.Chart(df_clean,
                        title='Kind Actor Breakdown',
                        height=400).mark_bar().encode(
-    x=alt.X('Actor', sort='-y'),
-    y='count(Actor)'
+    y=alt.Y('Actor', sort='-x'),
+    x='count(Actor)'
     )
 st.altair_chart(test_chart, use_container_width=True)
 df_actions = df.dropna(subset=['Action'])
@@ -70,7 +70,7 @@ st.write("""
      power or influence over the interviewee (e.g. investor, boss, doctor).
      Neighbors, peers, strangers, friends were the exception to this.
     """
-        )
+         )
 st.write("""
     When we break down the family members (this time lumping in
     spouses as well), we get this graph.
@@ -80,15 +80,68 @@ df_family = df_clean[df_clean['Acting Person'].isin(family_member_list)]
 
 fam_chart = alt.Chart(df_family, height=400,
                       title='Family Breakdown').mark_bar().encode(
-    x=alt.X('Acting Person', sort='-y'),
-    y='count(Acting Person)'
+    y=alt.Y('Acting Person', sort='-x'),
+    x='count(Acting Person)'
     )
 st.altair_chart(fam_chart, use_container_width=True)
 
+
+st.write("""
+    Parents and wives absolutely dominate here. The only surprise
+    to me here is that stepfathers make it, but when I listened to
+    the pseudonymous account Modest Proposal's reason, it starts to make
+    sense.""")
+st.info("""
+
+    "My parents divorced when I was about six months old ... and she started
+    dating a guy who ultimately became my stepfather. I always appreciated how
+    incredibly generous and amazing he was to support us when we weren't his
+    kids, and to take us on at that age when he was a grad student and
+    didn't have a full-time income yet ... and for him to have done it and
+    provide me and my siblings with the opportunity that we got ...
+    in retrospect it's just the magnitude of that."
+    """)
+st.write("""
+
+    The same sentiment about step-fathers is repeated by Brad Katsuyama
+    (the protagonist in Flash Boys), when he said:""")
+st.info("""
+
+    "... so when I was four years old, my parents got divorced but remained
+    friends. And my stepfather came in and started living with us when I was
+    like five years old... And I think I look back, especially now I have
+    three kids now, Brandon's seven, Rylan is five, and Emmy is turning
+     two. And I just can't imagine going into a situation with someone else's
+     children and making them feel like this is the way life should be.
+     And I've never known a different life. What's interesting though is
+     my wife, now you're going to get me all emotional here. My wife has
+     said I have so many attributes of my stepfather. Oh my God. Can we cut?"
+
+    """)
+st.subheader("What Do People Mention?")
+st.write("""
+    While doing this project, i've heard quite a few incredibly shitty
+    definitions of kindness. There is really only one that I've felt is
+    true to what Patrick probably means when he asks.
+    """)
+st.info("""
+    Kindness is the sincere and voluntary use of one’s time, talent,
+    and resources to better the lives of others, one’s own life, and
+    the world through genuine acts of love, compassion, generosity, and
+    service.
+    """)
+st.write("""
+    The only thing I would add here is that kindness needs
+    to be done without the expectation of repayment. If I loan you
+    $1000, I'm not doing that to be kind even if it helps you kickstart
+    your lemonade stand. Now, I've broken down the podcast responses into
+    a few categories. Note: there are lots of grey areas between these
+    categories, but this is the best I could figure out!
+    """)
 test_chart2 = alt.Chart(df_actions, height=400,
                         title='Kind Action Breakdown').mark_bar().encode(
-    x=alt.X('Action', sort='-y'),
-    y='count(Action)'
+    y=alt.Y('Action', sort='-x'),
+    x='count(Action)'
     )
 st.altair_chart(test_chart2, use_container_width=True)
 
