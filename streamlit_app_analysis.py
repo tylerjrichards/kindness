@@ -134,7 +134,10 @@ st.write("""
     The only thing I would add here is that kindness needs
     to be done without the expectation of repayment. If I loan you
     $1000, I'm not doing that to be kind even if it helps you kickstart
-    your lemonade stand. Now, I've broken down the podcast responses into
+    your lemonade stand. This means, under that definition, any investment
+    would not really be an act of kindness as there are expected returns.
+
+    Now, I've broken down the podcast responses into
     a few categories. Note: there are lots of grey areas between these
     categories, but this is the best I could figure out!
     """)
@@ -145,6 +148,10 @@ test_chart2 = alt.Chart(df_actions, height=400,
     )
 st.altair_chart(test_chart2, use_container_width=True)
 
+st.write("""
+    The category where someone took a chance on others was
+
+    """)
 
 """
 Definitions:
