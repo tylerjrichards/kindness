@@ -4,14 +4,19 @@ import pandas as pd
 import numpy as np
 import altair as alt
 
+st.title('On Kindness')
+st.subheader('By [Tyler Richards](https://www.twitter.com/tylerjrichards)')
+
 """
 For the past couple years, I have listened to hundreds of hours of
-a podcast called [Invest Like the Best](), run by an investor/asset manager/
-public intellectual named Patrick O'Shaughnessy. The podcast is a bunch
+a podcast called
+[Invest Like the Best](https://open.spotify.com/show/22fi0RqfoBACCuQDv97wFO),
+run by an investor/asset manager/public
+intellectual named Patrick O'Shaughnessy. The podcast is a bunch
 of fun because of the combination of great topics (everything from Costco to
 Facebook to crypto), guests, and interviewing style, and my favorite part is
-almost always the final question of each podcast where Patrick asks the interviewee
-what is the kindest thing anyone has ever done for them.
+almost always the final question of each podcast where Patrick asks
+the interviewee what is the kindest thing anyone has ever done for them.
 
 People's answers to this say a lot about them; some people mention
 the action that gave them the biggest 'leg up' in life
@@ -186,36 +191,183 @@ st.info("""
     """)
 
 st.write("""
-    I think this is true for both angel investing (and the
-    company/investor-flirtation period before angel investing) and just the
-    propensity to answer a cold email or  or starting
-    a company with a peer. Max Levchin and Alex Rampell (founders of Affirm)
+    I think this is true for angel investing/the
+    company/investor-flirtation period before angel investing and just the
+    propensity to answer a cold email.
+    Max Levchin and Alex Rampell (founders of Affirm)
     met via random cold email, Elad Gil (famous investor and operator) credits
-    a thousand small acts of kindness in the Valley for his success.
+    a thousand small acts of kindness in the Valley for his success. I
+    have at least a 50 percent hit rate on cold emails since I started in
+    tech, and quite a few of the opportunities I had came from cold emails!
     """)
 st.markdown('#### Other Notes:')
 st.write("""
     I was quite unsurprised with the next few popular mentions, support,
     mentorship, help in time of need, and sacrifice meet my own expectations
     for placement.
+
     The surprise to me above was critique, which was a little distinct but
-    connected to mentorship, and involved people getting fired Support and mentorship unsurprisingly
+    connected to mentorship, and involved people getting fired (David Tisch
+    described his firing experience as 'aggressive'), teachers
+    giving poor grades, and friends convincing others to get their shit
+    together. These are, in my view, the other side of the 'Took a chance'
+    coin in that they often push folks to be more ambitious or dedicated, but
+    I would have never expected to see as many as I did here.
+
+    The Immigration stories in this bunch are some of my favorites, they are
+    often similar to sacrifice acts of kindness, but were distinct enough to
+    deserve their own category. For example, from Jeff Ma of the famous MIT
+    Blackjack team:
 
 
 
     """)
-st.markdown('#### Platform Promotion')
+st.info("""
+    "I think anyone that's born of immigrant parents, who came here basically
+    to make their kids have a better life, their answer has to be their
+    parents. My dad and mom came here from Taiwan. They were originally from
+    China. When the communists took over, my dad, they never had cable in
+    their lives. If you talk about a great lesson about compounding, my dad
+    was a professor, my mom was a nurse anesthetist. Great jobs, but none of
+    them are what you would consider to be jobs that would set you up for the
+    rest of your life in terms of... but they never had cable. The only money
+    they really ever spent was on our education. Both my sisters and I went
+    to Phillips Exeter Academy and then to MIT. So that's not a cheap amount
+    of money at that level... So I think clearly, my dad and my mom
+    would be my answer. That's the easy answer."
+    """)
+st.markdown('#### Actor Action Combo Breakdown')
 st.write("""
-    There were 3 interviewees who have (Jeremy Grantham, Ben Thompson
-    of Stratechery fame, Michael Kitces)
-
-
+    The last question I had was, what are the most popular actor-action
+    combinations?
     """)
 
 df_doubled_up = df.dropna(subset=['Actor', 'Action'])
 df_doubled_up['actor_action_combo'] = df_doubled_up['Actor'] + \
     '-' + df_doubled_up['Action']
-st.write(df_doubled_up['actor_action_combo'].value_counts())
+top_combos = df_doubled_up['actor_action_combo'].value_counts()\
+    .index[0:18].tolist()
+df_combos = df_doubled_up[df_doubled_up['actor_action_combo']
+    .isin(top_combos)]
+combo_chart2 = alt.Chart(df_combos, height=400,
+                         title='Combo Breakdown').mark_bar().encode(
+    y=alt.Y('actor_action_combo', sort='-x'),
+    x=alt.X('count(actor_action_combo)'),
+    tooltip=[alt.Tooltip('actor_action_combo')]
+    ).interactive()
+st.altair_chart(combo_chart2, use_container_width=True)
+st.write("""
+    Families were most likely to be mentioned for support, upbringing,
+    and sacrifice, Bosses and investment firms for taking a chance, wives for
+    marriage, forgiveness (????) and sacrifice, and strangers for help in a
+    time of need.
+    It really was a blast reading through all these kind actions (even
+    if it was slightly tedious!), I've included some of my favorites,
+    along with interactive visualizations and the underlying data
+    for the curious to look at if interested.
+    """)
+
+st.markdown("#### Tyler's Favorite Kind Actions")
+st.write("""
+    I've read and/or listened to each one of these 260 interviews, and
+    below are my top 3 most surprising or interesting acts of kindness
+    that I have yet to mention.
+
+
+
+    """)
+st.markdown("""##### Kobe Bryant's Words of Encouragement""")
+st.info("""
+    "I played basketball in high school and it turns out that I'm the same age
+    as Kobe Bryant and his high school was like a mile away from mine...He was
+    practicing with the Sixers in the summertime when he was a junior in
+    high school. And you could just tell that he was going to go places.
+    So our junior year, we're playing and the first time we played his
+    high school, I had a terrible game. It was at home and I was like
+    humiliated. He just owned the team, but I took a shot and I think
+    he threw it to the other side of the court or something. I just
+    played poorly...
+
+    And as I was leaving, he was coming out of the visiting
+    team's locker room. And he could see that I was not in the best condition.
+    And he came over to me and said ... "You're a very good player. Don't be
+    discouraged. I'm sure the next time we play, you're going to have a much
+    better game."
+
+    Even though we were peers, he was already looked at as a superstar.
+    It was sort of like Michael Jordan telling that to you ... he really went
+    out of his way to encourage me and to say very positive things about me
+    when I was feeling very down about myself ... I'll never forget that
+    because sometimes you feel obligated to do nice things. when you really
+    don't have to do something to help someone else, but you do it anyway,
+    even if it's small, to me, I think that has a great deal of value and
+    stood out to me." - Geoffrey Batt
+
+    """)
+st.markdown("""##### Northern Ireland Neighbors""")
+
+st.info("""
+    "(This question) took me all the way back to growing up in Northern
+    Ireland and when the first bomb went off in our local village. I grew
+    up in this really small little village of about 1200 people. The
+    local police barracks got blown up and it took out all the windows
+    in the back of our house. We didn't live a particularly big house,
+    all the windows in the back, my bedroom, the dining room, the kitchen,
+    all the windows blew in. So, there's glass everywhere, it had been a
+    pretty traumatizing day because I had been in primary school.
+    So, I was probably about 10 and we'd all had to shelter on our desks.
+    ... What was amazing in terms of an act of kind is the minute ... our
+    neighbors came in, took a look and they went back out and they had
+    figured out where they could go by plywood ... They came in and
+    they boarded up all our windows. And I remember Marcella,
+    the mom bringing us hot food cause our kitchen was a disaster.
+    But what made that really poignant is the whole divide in Northern
+    Ireland was religious. And we were Protestant and our door neighbors
+    are Catholic. And so, technically we were meant to hate each other.
+    That's why people were blowing up things. And yet the fact that kindness
+    that they just came that night, I just have such a sense of warmth still
+    because it was a brutal like a day you never forget in your life.
+    That family still lives next door to my mom and dad." - Sarah Friar
+    """)
+
+st.markdown('#### Interactive Data Viz')
+actor_x = st.selectbox('Choose an Actor, see a breakdown of Actions', df_clean['Actor'].unique())
+df_selected = df_clean[df_clean['Actor'] == actor_x]
+cols_to_keep = ['GUEST', 'SITE_URL', 'Introduction', 'Response',
+                'Action', 'Actor']
+df_selected = df_selected[cols_to_keep]
+selected_chart = alt.Chart(df_selected, height=400,
+                           title='Kind Action Breakdown for selection: {}'
+                           .format(actor_x)).mark_bar().encode(
+    y=alt.Y('Action', sort='-x'),
+    x=alt.X('count(Action):Q'),
+    tooltip=[alt.Tooltip('Action')]
+    ).interactive()
+st.altair_chart(selected_chart, use_container_width=True)
+st.write("""
+    Below are all the interviews for the actor you selected!
+    """)
+st.write(df_selected)
+
+action_x = st.selectbox('Choose an Action, see a breakdown of Actors',
+                        df_actions['Action'].unique())
+df_selected_action = df_actions[df_actions['Action'] == action_x]
+df_selected_action = df_selected_action[cols_to_keep]
+selected_chart = alt.Chart(df_selected_action, height=400,
+                           title='Kind Actor Breakdown for selection: {}'
+                           .format(action_x)).mark_bar().encode(
+    y=alt.Y('Actor', sort='-x'),
+    x=alt.X('count(Actor):Q'),
+    tooltip=[alt.Tooltip('Actor')]
+    ).interactive()
+st.altair_chart(selected_chart, use_container_width=True)
+st.write("""
+    Below are all the interviews for the action you selected!
+    """)
+st.write(df_selected_action)
+
+
+
 
 """
 Definitions:
