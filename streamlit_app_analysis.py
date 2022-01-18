@@ -52,7 +52,8 @@ test_chart = alt.Chart(df_clean,
                        title='Kind Actor Breakdown',
                        height=400).mark_bar().encode(
     y=alt.Y('Actor', sort='-x'),
-    x='count(Actor)'
+    x='count(Actor)',
+    tooltip=[alt.Tooltip('Actor')]
     )
 st.altair_chart(test_chart, use_container_width=True)
 df_actions = df.dropna(subset=['Action'])
@@ -81,7 +82,8 @@ df_family = df_clean[df_clean['Acting Person'].isin(family_member_list)]
 fam_chart = alt.Chart(df_family, height=400,
                       title='Family Breakdown').mark_bar().encode(
     y=alt.Y('Acting Person', sort='-x'),
-    x='count(Acting Person)'
+    x='count(Acting Person)',
+    tooltip=[alt.Tooltip('Acting Person')]
     )
 st.altair_chart(fam_chart, use_container_width=True)
 
@@ -122,7 +124,8 @@ st.subheader("What Do People Mention?")
 st.write("""
     While doing this project, i've heard quite a few incredibly shitty
     definitions of kindness. There is really only one that I've felt is
-    true to what Patrick probably means when he asks.
+    useful while also is true to what Patrick probably means when he asks
+    this question to his guests.
     """)
 st.info("""
     Kindness is the sincere and voluntary use of one’s time, talent,
@@ -144,14 +147,75 @@ st.write("""
 test_chart2 = alt.Chart(df_actions, height=400,
                         title='Kind Action Breakdown').mark_bar().encode(
     y=alt.Y('Action', sort='-x'),
-    x='count(Action)'
-    )
+    x=alt.X('count(Action):Q'),
+    tooltip=[alt.Tooltip('Action')]
+    ).interactive()
 st.altair_chart(test_chart2, use_container_width=True)
+st.markdown('#### The "Took a chance" Category')
+st.write("""
+    The category where someone took a chance on others was far and away
+    the most popular one. Often, this in when folks take the time to see
+    the potential in you long before anyone else. there are a few key
+    situations where this can happen.
+
+    1. Investment via the 'first check'. Roughly a quarter of the
+    'took a chance'segment are when an investor or firm believed
+    in the vision of the entrepreneur enough to finance their effort.
+    2. Another quarter of this segment came from hiring. Often this involved
+    a recruiter or other employee advocating to give someone a job they
+    might not be completely qualified for, where their enthusiasm was greater
+    than their conpetence (as Charlie Songhurst, head of Strategy for Microsoft
+    and incredible investor put it).
+    3. There were three people who mentioned the 'Pay it forward' nature of
+    Silicon Valley where people were extremely generous with advice or help,
+    with little to no expectation of anything in return.
+    [Alex Danco](www.alexdanco.com) often blogs about this (especially
+    pre-covid), saying that there are social status gains to helping
+    entrepreneurs through angel investing or advice unique to the Bay Area,
+    [saying:](https://alexdanco.com/2019/11/27/the-social-subsidy-of-angel-investing/)
+    """)
+st.info("""
+    The Bay Area tech ecosystem has been so successful that startup-related
+    news has become the principal determinant of social status in San
+    Francisco. In other cities, you acquire and flex social status by joining
+    exclusive neighbourhoods or country clubs, or through philanthropic
+    gestures, or even something as simple as what car you drive. In San
+    Francisco, it’s angel investing. Other than founding a successful startup
+    yourself, there’s not much higher-status in the Bay Area than backing
+    founders that go on to build Uber or Stripe.
+    """)
 
 st.write("""
-    The category where someone took a chance on others was
+    I think this is true for both angel investing (and the
+    company/investor-flirtation period before angel investing) and just the
+    propensity to answer a cold email or  or starting
+    a company with a peer. Max Levchin and Alex Rampell (founders of Affirm)
+    met via random cold email, Elad Gil (famous investor and operator) credits
+    a thousand small acts of kindness in the Valley for his success.
+    """)
+st.markdown('#### Other Notes:')
+st.write("""
+    I was quite unsurprised with the next few popular mentions, support,
+    mentorship, help in time of need, and sacrifice meet my own expectations
+    for placement.
+    The surprise to me above was critique, which was a little distinct but
+    connected to mentorship, and involved people getting fired Support and mentorship unsurprisingly
+
+
 
     """)
+st.markdown('#### Platform Promotion')
+st.write("""
+    There were 3 interviewees who have (Jeremy Grantham, Ben Thompson
+    of Stratechery fame, Michael Kitces)
+
+
+    """)
+
+df_doubled_up = df.dropna(subset=['Actor', 'Action'])
+df_doubled_up['actor_action_combo'] = df_doubled_up['Actor'] + \
+    '-' + df_doubled_up['Action']
+st.write(df_doubled_up['actor_action_combo'].value_counts())
 
 """
 Definitions:
