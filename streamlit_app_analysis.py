@@ -36,7 +36,7 @@ the very ways that others find the most kind! On to the analysis.
 st.subheader('Who Do People Mention?')
 st.write("""
     Below is a breakdown of who the person was doing the kindness. I had to
-    Take some liberties in these definitions (e.g. I separated Family and Wife
+    take some liberties in these definitions (e.g. I separated Family and Wife
     by the classic family you choose vs family you don't choose principle). I
     put the trickier definitions down at the bottom.
     """)
@@ -127,10 +127,10 @@ st.info("""
     """)
 st.subheader("What Do People Mention?")
 st.write("""
-    While doing this project, i've heard quite a few incredibly shitty
-    definitions of kindness. There is really only one that I've felt is
-    useful while also is true to what Patrick probably means when he asks
-    this question to his guests.
+    While doing this project, I've heard quite a few well intentioned but
+    insufficient definitions of kindness. There is really
+    only one that I've felt is useful while also is true to what
+    Patrick probably means when he asks this question to his guests.
     """)
 st.info("""
     Kindness is the sincere and voluntary use of one’s time, talent,
@@ -160,7 +160,7 @@ st.markdown('#### The "Took a chance" Category')
 st.write("""
     The category where someone took a chance on others was far and away
     the most popular one. Often, this in when folks take the time to see
-    the potential in you long before anyone else. there are a few key
+    the potential in you long before anyone else. There are a few key
     situations where this can happen.
 
     1. Investment via the 'first check'. Roughly a quarter of the
@@ -262,7 +262,7 @@ st.write("""
     marriage, forgiveness (????) and sacrifice, and strangers for help in a
     time of need.
     It really was a blast reading through all these kind actions (even
-    if it was slightly tedious!), I've included some of my favorites,
+    if it was slightly tedious!). I've included some of my favorites,
     along with interactive visualizations and the underlying data
     for the curious to look at if interested.
     """)
@@ -366,10 +366,37 @@ st.write("""
     """)
 st.write(df_selected_action)
 
+st.markdown('### Fin')
+st.write("""Thanks for joining me this far, as I said before I am a huge
+    fan of the podcast and the human condition. Find more work of mine
+    at [this website](http://www.tylerjrichards.com) or on
+    [Twitter](https://www.twitter.com/tylerjrichards). And find the podcast at
+    [this link](https://open.spotify.com/show/22fi0RqfoBACCuQDv97wFO). You
+    can also download the full data below.
+        """)
+with open("itlb_responses.csv", "rb") as file:
+    btn = st.download_button(
+             label="Download data",
+             data=file,
+             file_name="itlb_responses.csv",
+             mime="csv"
+           )
 
+st.markdown('#### Other Definitions:')
+st.write("""
+Peer vs friend: peer needs to be someone
+in the same field with a connection that is non-business related.
+A friend here usually has no real connection in industry. If someone
+is a peer and a friend, I looked at the act of kindness to define the
+acting person.
 
+Family: I broke this down above, but I excluded
+family that the people chose from family that was
+by birth (e.g. wives vs mothers)
 
-"""
-Definitions:
-Peer vs friend: peer needs to be someone in the same field with a connection that is non-business related. A friend here usually has no real connection in industry. If someone is a peer and a friend, I looked at the act of kindness to define the acting person.
-"""
+Sacrifice vs Support: This one was also tricky, I only used
+these two mostly when they were explicitly called out by the interviewee.
+Other than that, sacrifice and support are on the same continuum, but
+sacrifice has a deeper personal loss while you can support someone without
+coming out too poorly yourself.
+""")
