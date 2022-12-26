@@ -1,11 +1,11 @@
 """module docstring"""
-import streamlit as st
-import pandas as pd
-import numpy as np
 import altair as alt
+import numpy as np
+import pandas as pd
+import streamlit as st
 
-st.title('On Kindness')
-st.subheader('By [Tyler Richards](https://www.twitter.com/tylerjrichards)')
+st.title("On Kindness")
+st.subheader("By [Tyler Richards](https://www.twitter.com/tylerjrichards)")
 
 """
 For the past couple years, I have listened to hundreds of hours of
@@ -33,72 +33,85 @@ subset of people appreciated in aggregate, which encourages my own
 behavior changes. May we all strive to be kinder to each other in
 the very ways that others find the most kind! On to the analysis.
 """
-st.subheader('Who Do People Mention?')
-st.write("""
+st.subheader("Who Do People Mention?")
+st.write(
+    """
     Below is a breakdown of who the person was doing the kindness. I had to
     take some liberties in these definitions (e.g. I separated Family and Wife
     by the classic family you choose vs family you don't choose principle). I
     put the trickier definitions down at the bottom.
-    """)
-
-df = pd.read_csv('itlb_responses.csv')
-family_member_list = ['Father', 'Mother', 'Parents',
-                      'Family', 'Stepfather', 'Parent',
-                      'Grandmother', 'Uncle', 'Grandfather']
-df['Actor'] = df['Acting Person']
-df['Actor'] = np.where(
-    df['Acting Person'].isin(family_member_list),
-    'Family', df['Acting Person'])
-
-df_clean = df.dropna(subset=['Actor'])
-top_actors = df_clean['Actor'].value_counts().index[0:15].tolist()
-df_clean = df_clean[df_clean['Actor'].isin(top_actors)]
-test_chart = alt.Chart(df_clean,
-                       title='Kind Actor Breakdown',
-                       height=400).mark_bar().encode(
-    y=alt.Y('Actor', sort='-x'),
-    x='count(Actor)',
-    tooltip=[alt.Tooltip('Actor')]
-    )
-st.altair_chart(test_chart, use_container_width=True)
-df_actions = df.dropna(subset=['Action'])
-top_actions = df_actions['Action'].value_counts().index[0:14].tolist()
-df_actions = df_actions[df_actions['Action'].isin(top_actions)]
-
-st.write("""
-     A few things that were surprising to me were:
-
-     1. Husbands were never mentioned, probably because the podcasts guests are
-     mostly straight dudes.
-     2. Doctors, Coaches, Teachers, and Investors were the only professions to
-      make it on the list. I wasn't expecting Doctors to be on there at all!
-     3. The majority of the non-family actors were in a position of
-     power or influence over the interviewee (e.g. investor, boss, doctor).
-     Neighbors, peers, strangers, friends were the exception to this.
     """
-         )
-st.write("""
-    When we break down the family members (this time lumping in
-    spouses as well), we get this graph.
-    """)
-family_member_list.append('Wife')
-df_family = df_clean[df_clean['Acting Person'].isin(family_member_list)]
+)
 
-fam_chart = alt.Chart(df_family, height=400,
-                      title='Family Breakdown').mark_bar().encode(
-    y=alt.Y('Acting Person', sort='-x'),
-    x='count(Acting Person)',
-    tooltip=[alt.Tooltip('Acting Person')]
+df = pd.read_csv("itlb_responses.csv")
+family_member_list = [
+    "Father",
+    "Mother",
+    "Parents",
+    "Family",
+    "Stepfather",
+    "Parent",
+    "Grandmother",
+    "Uncle",
+    "Grandfather",
+]
+df["Actor"] = df["Acting Person"]
+df["Actor"] = np.where(
+    df["Acting Person"].isin(family_member_list), "Family", df["Acting Person"]
+)
+
+df_clean = df.dropna(subset=["Actor"])
+top_actors = df_clean["Actor"].value_counts().index[0:15].tolist()
+df_clean = df_clean[df_clean["Actor"].isin(top_actors)]
+test_chart = (
+    alt.Chart(df_clean, title="Kind Actor Breakdown", height=400)
+    .mark_bar()
+    .encode(
+        y=alt.Y("Actor", sort="-x"), x="count(Actor)", tooltip=[alt.Tooltip("Actor")]
     )
+)
+st.altair_chart(test_chart, use_container_width=True)
+df_actions = df.dropna(subset=["Action"])
+top_actions = df_actions["Action"].value_counts().index[0:14].tolist()
+df_actions = df_actions[df_actions["Action"].isin(top_actions)]
+
+st.markdown(
+    """
+     A few things that were surprising to me were:
+     1. Husbands were never mentioned, probably because the podcasts guests are mostly straight dudes.
+
+     2. Doctors, Coaches, Teachers, and Investors were the only professions to make it on the list. I wasn't expecting Doctors to be on there at all!
+
+     3. The majority of the non-family actors were in a position of power or influence over the interviewee (e.g. investor, boss, doctor).
+     Neighbors, peers, strangers, friends were the exception to this. When we break down the family members (this time lumping in
+    spouses as well), we get this graph.
+    """
+)
+
+family_member_list.append("Wife")
+df_family = df_clean[df_clean["Acting Person"].isin(family_member_list)]
+
+fam_chart = (
+    alt.Chart(df_family, height=400, title="Family Breakdown")
+    .mark_bar()
+    .encode(
+        y=alt.Y("Acting Person", sort="-x"),
+        x="count(Acting Person)",
+        tooltip=[alt.Tooltip("Acting Person")],
+    )
+)
 st.altair_chart(fam_chart, use_container_width=True)
 
 
-st.write("""
+st.write(
+    """
     Parents and wives absolutely dominate here. The only surprise
     to me here is that stepfathers make it, but when I listened to
     the pseudonymous account Modest Proposal's reason, it starts to make
-    sense.""")
-st.info("""
+    sense."""
+)
+st.info(
+    """
 
     "My parents divorced when I was about six months old ... and she started
     dating a guy who ultimately became my stepfather. I always appreciated how
@@ -107,12 +120,16 @@ st.info("""
     didn't have a full-time income yet ... and for him to have done it and
     provide me and my siblings with the opportunity that we got ...
     in retrospect it's just the magnitude of that."
-    """)
-st.write("""
+    """
+)
+st.write(
+    """
 
     The same sentiment about step-fathers is repeated by Brad Katsuyama
-    (the protagonist in Flash Boys), when he said:""")
-st.info("""
+    (the protagonist in Flash Boys), when he said:"""
+)
+st.info(
+    """
 
     "... so when I was four years old, my parents got divorced but remained
     friends. And my stepfather came in and started living with us when I was
@@ -124,21 +141,27 @@ st.info("""
      my wife, now you're going to get me all emotional here. My wife has
      said I have so many attributes of my stepfather. Oh my God. Can we cut?"
 
-    """)
+    """
+)
 st.subheader("What Do People Mention?")
-st.write("""
+st.write(
+    """
     While doing this project, I've heard quite a few well intentioned but
     insufficient definitions of kindness. There is really
     only one that I've felt is useful while also is true to what
     Patrick probably means when he asks this question to his guests.
-    """)
-st.info("""
+    """
+)
+st.info(
+    """
     Kindness is the sincere and voluntary use of one’s time, talent,
     and resources to better the lives of others, one’s own life, and
     the world through genuine acts of love, compassion, generosity, and
     service.
-    """)
-st.write("""
+    """
+)
+st.write(
+    """
     The only thing I would add here is that kindness needs
     to be done without the expectation of repayment. If I loan you
     $1000, I'm not doing that to be kind even if it helps you kickstart
@@ -148,16 +171,22 @@ st.write("""
     Now, I've broken down the podcast responses into
     a few categories. Note: there are lots of grey areas between these
     categories, but this is the best I could figure out!
-    """)
-test_chart2 = alt.Chart(df_actions, height=400,
-                        title='Kind Action Breakdown').mark_bar().encode(
-    y=alt.Y('Action', sort='-x'),
-    x=alt.X('count(Action):Q'),
-    tooltip=[alt.Tooltip('Action')]
-    ).interactive()
+    """
+)
+test_chart2 = (
+    alt.Chart(df_actions, height=400, title="Kind Action Breakdown")
+    .mark_bar()
+    .encode(
+        y=alt.Y("Action", sort="-x"),
+        x=alt.X("count(Action):Q"),
+        tooltip=[alt.Tooltip("Action")],
+    )
+    .interactive()
+)
 st.altair_chart(test_chart2, use_container_width=True)
 st.markdown('#### The "Took a chance" Category')
-st.write("""
+st.write(
+    """
     The category where someone took a chance on others was far and away
     the most popular one. Often, this in when folks take the time to see
     the potential in you long before anyone else. There are a few key
@@ -178,8 +207,10 @@ st.write("""
     pre-covid), saying that there are social status gains to helping
     entrepreneurs through angel investing or advice unique to the Bay Area,
     [saying:](https://alexdanco.com/2019/11/27/the-social-subsidy-of-angel-investing/)
-    """)
-st.info("""
+    """
+)
+st.info(
+    """
     The Bay Area tech ecosystem has been so successful that startup-related
     news has become the principal determinant of social status in San
     Francisco. In other cities, you acquire and flex social status by joining
@@ -188,9 +219,11 @@ st.info("""
     Francisco, it’s angel investing. Other than founding a successful startup
     yourself, there’s not much higher-status in the Bay Area than backing
     founders that go on to build Uber or Stripe.
-    """)
+    """
+)
 
-st.write("""
+st.write(
+    """
     I think this is true for angel investing/the
     company/investor-flirtation period before angel investing and just the
     propensity to answer a cold email.
@@ -199,9 +232,11 @@ st.write("""
     a thousand small acts of kindness in the Valley for his success. I
     have at least a 50 percent hit rate on cold emails since I started in
     tech, and quite a few of the opportunities I had came from cold emails!
-    """)
-st.markdown('#### Other Notes:')
-st.write("""
+    """
+)
+st.markdown("#### Other Notes:")
+st.write(
+    """
     I was quite unsurprised with the next few popular mentions, support,
     mentorship, help in time of need, and sacrifice meet my own expectations
     for placement.
@@ -221,8 +256,10 @@ st.write("""
 
 
 
-    """)
-st.info("""
+    """
+)
+st.info(
+    """
     "I think anyone that's born of immigrant parents, who came here basically
     to make their kids have a better life, their answer has to be their
     parents. My dad and mom came here from Taiwan. They were originally from
@@ -235,28 +272,35 @@ st.info("""
     to Phillips Exeter Academy and then to MIT. So that's not a cheap amount
     of money at that level... So I think clearly, my dad and my mom
     would be my answer. That's the easy answer."
-    """)
-st.markdown('#### Actor Action Combo Breakdown')
-st.write("""
+    """
+)
+st.markdown("#### Actor Action Combo Breakdown")
+st.write(
+    """
     The last question I had was, what are the most popular actor-action
     combinations?
-    """)
+    """
+)
 
-df_doubled_up = df.dropna(subset=['Actor', 'Action'])
-df_doubled_up['actor_action_combo'] = df_doubled_up['Actor'] + \
-    '-' + df_doubled_up['Action']
-top_combos = df_doubled_up['actor_action_combo'].value_counts()\
-    .index[0:18].tolist()
-df_combos = df_doubled_up[df_doubled_up['actor_action_combo']
-    .isin(top_combos)]
-combo_chart2 = alt.Chart(df_combos, height=400,
-                         title='Combo Breakdown').mark_bar().encode(
-    y=alt.Y('actor_action_combo', sort='-x'),
-    x=alt.X('count(actor_action_combo)'),
-    tooltip=[alt.Tooltip('actor_action_combo')]
-    ).interactive()
+df_doubled_up = df.dropna(subset=["Actor", "Action"])
+df_doubled_up["actor_action_combo"] = (
+    df_doubled_up["Actor"] + "-" + df_doubled_up["Action"]
+)
+top_combos = df_doubled_up["actor_action_combo"].value_counts().index[0:18].tolist()
+df_combos = df_doubled_up[df_doubled_up["actor_action_combo"].isin(top_combos)]
+combo_chart2 = (
+    alt.Chart(df_combos, height=400, title="Combo Breakdown")
+    .mark_bar()
+    .encode(
+        y=alt.Y("actor_action_combo", sort="-x"),
+        x=alt.X("count(actor_action_combo)"),
+        tooltip=[alt.Tooltip("actor_action_combo")],
+    )
+    .interactive()
+)
 st.altair_chart(combo_chart2, use_container_width=True)
-st.write("""
+st.write(
+    """
     Families were most likely to be mentioned for support, upbringing,
     and sacrifice, Bosses and investment firms for taking a chance, wives for
     marriage, forgiveness (????) and sacrifice, and strangers for help in a
@@ -265,19 +309,23 @@ st.write("""
     if it was slightly tedious!). I've included some of my favorites,
     along with interactive visualizations and the underlying data
     for the curious to look at if interested.
-    """)
+    """
+)
 
 st.markdown("#### Tyler's Favorite Kind Actions")
-st.write("""
+st.write(
+    """
     I've read and/or listened to each one of these 260 interviews, and
     below are my top 3 most surprising or interesting acts of kindness
     that I have yet to mention.
 
 
 
-    """)
+    """
+)
 st.markdown("""##### Kobe Bryant's Words of Encouragement""")
-st.info("""
+st.info(
+    """
     "I played basketball in high school and it turns out that I'm the same age
     as Kobe Bryant and his high school was like a mile away from mine...He was
     practicing with the Sixers in the summertime when he was a junior in
@@ -303,10 +351,12 @@ st.info("""
     even if it's small, to me, I think that has a great deal of value and
     stood out to me." - Geoffrey Batt
 
-    """)
+    """
+)
 st.markdown("""##### Northern Ireland Neighbors""")
 
-st.info("""
+st.info(
+    """
     "(This question) took me all the way back to growing up in Northern
     Ireland and when the first bomb went off in our local village. I grew
     up in this really small little village of about 1200 people. The
@@ -328,62 +378,83 @@ st.info("""
     that they just came that night, I just have such a sense of warmth still
     because it was a brutal like a day you never forget in your life.
     That family still lives next door to my mom and dad." - Sarah Friar
-    """)
+    """
+)
 
-st.markdown('#### Interactive Data Viz')
-actor_x = st.selectbox('Choose an Actor, see a breakdown of Actions', df_clean['Actor'].unique())
-df_selected = df_clean[df_clean['Actor'] == actor_x]
-cols_to_keep = ['GUEST', 'SITE_URL', 'Introduction', 'Response',
-                'Action', 'Actor']
+st.markdown("#### Interactive Data Viz")
+actor_x = st.selectbox(
+    "Choose an Actor, see a breakdown of Actions", df_clean["Actor"].unique()
+)
+df_selected = df_clean[df_clean["Actor"] == actor_x]
+cols_to_keep = ["GUEST", "SITE_URL", "Introduction", "Response", "Action", "Actor"]
 df_selected = df_selected[cols_to_keep]
-selected_chart = alt.Chart(df_selected, height=400,
-                           title='Kind Action Breakdown for selection: {}'
-                           .format(actor_x)).mark_bar().encode(
-    y=alt.Y('Action', sort='-x'),
-    x=alt.X('count(Action):Q'),
-    tooltip=[alt.Tooltip('Action')]
-    ).interactive()
+selected_chart = (
+    alt.Chart(
+        df_selected,
+        height=400,
+        title="Kind Action Breakdown for selection: {}".format(actor_x),
+    )
+    .mark_bar()
+    .encode(
+        y=alt.Y("Action", sort="-x"),
+        x=alt.X("count(Action):Q"),
+        tooltip=[alt.Tooltip("Action")],
+    )
+    .interactive()
+)
 st.altair_chart(selected_chart, use_container_width=True)
-st.write("""
+st.write(
+    """
     Below are all the interviews for the actor you selected!
-    """)
+    """
+)
 st.write(df_selected)
 
-action_x = st.selectbox('Choose an Action, see a breakdown of Actors',
-                        df_actions['Action'].unique())
-df_selected_action = df_actions[df_actions['Action'] == action_x]
+action_x = st.selectbox(
+    "Choose an Action, see a breakdown of Actors", df_actions["Action"].unique()
+)
+df_selected_action = df_actions[df_actions["Action"] == action_x]
 df_selected_action = df_selected_action[cols_to_keep]
-selected_chart = alt.Chart(df_selected_action, height=400,
-                           title='Kind Actor Breakdown for selection: {}'
-                           .format(action_x)).mark_bar().encode(
-    y=alt.Y('Actor', sort='-x'),
-    x=alt.X('count(Actor):Q'),
-    tooltip=[alt.Tooltip('Actor')]
-    ).interactive()
+selected_chart = (
+    alt.Chart(
+        df_selected_action,
+        height=400,
+        title="Kind Actor Breakdown for selection: {}".format(action_x),
+    )
+    .mark_bar()
+    .encode(
+        y=alt.Y("Actor", sort="-x"),
+        x=alt.X("count(Actor):Q"),
+        tooltip=[alt.Tooltip("Actor")],
+    )
+    .interactive()
+)
 st.altair_chart(selected_chart, use_container_width=True)
-st.write("""
+st.write(
+    """
     Below are all the interviews for the action you selected!
-    """)
+    """
+)
 st.write(df_selected_action)
 
-st.markdown('### Fin')
-st.write("""Thanks for joining me this far, as I said before I am a huge
+st.markdown("### Fin")
+st.write(
+    """Thanks for joining me this far, as I said before I am a huge
     fan of the podcast and the human condition. Find more work of mine
     at [this website](http://www.tylerjrichards.com) or on
     [Twitter](https://www.twitter.com/tylerjrichards). And find the podcast at
     [this link](https://open.spotify.com/show/22fi0RqfoBACCuQDv97wFO). You
     can also download the full data below.
-        """)
+        """
+)
 with open("itlb_responses.csv", "rb") as file:
     btn = st.download_button(
-             label="Download data",
-             data=file,
-             file_name="itlb_responses.csv",
-             mime="csv"
-           )
+        label="Download data", data=file, file_name="itlb_responses.csv", mime="csv"
+    )
 
-st.markdown('#### Other Definitions:')
-st.write("""
+st.markdown("#### Other Definitions:")
+st.write(
+    """
 Peer vs friend: peer needs to be someone
 in the same field with a connection that is non-business related.
 A friend here usually has no real connection in industry. If someone
@@ -399,4 +470,5 @@ these two mostly when they were explicitly called out by the interviewee.
 Other than that, sacrifice and support are on the same continuum, but
 sacrifice has a deeper personal loss while you can support someone without
 coming out too poorly yourself.
-""")
+"""
+)
